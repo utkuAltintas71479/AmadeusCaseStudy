@@ -30,6 +30,7 @@ public class UserService {
         return new CreateNewUserResponseDTO(user.getUserId(), user.getUserName());
     }
 
+
     public boolean isUsernameAlreadyInUse(String userName) {
         return userRepository.findByUserName(userName).isPresent();
     }

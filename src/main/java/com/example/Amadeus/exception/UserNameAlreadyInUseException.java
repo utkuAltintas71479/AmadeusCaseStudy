@@ -1,7 +1,9 @@
 package com.example.Amadeus.exception;
 
 public class UserNameAlreadyInUseException extends RuntimeException{
-    public UserNameAlreadyInUseException(String username) {
-        super(String.format("Username '%s' is already in use", username));
+
+    public UserNameAlreadyInUseException(String userName) {
+        super(String.format("Username already in use: %s", userName));
     }
+
 }
