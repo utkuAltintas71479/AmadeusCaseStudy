@@ -40,7 +40,7 @@ public class ScheduledJobService {
         }
     }
 
-    private Airport findOrCreateAirport(Airport airport) {
+    protected Airport findOrCreateAirport(Airport airport) {
         Airport existingAirport = airportRepository.findById(airport.getId()).orElse(null);
         if (existingAirport != null) {
             return existingAirport;
@@ -66,7 +66,7 @@ public class ScheduledJobService {
         return mockFlights;
     }
 
-    private Airport[] generateMockAirports() {
+    protected Airport[] generateMockAirports() {
         Airport departureAirport = new Airport();
         int departureAirportId = ThreadLocalRandom.current().nextInt(1,Constants.AIRPORT_CITIES.length+1);
         departureAirport.setId(departureAirportId);
@@ -81,7 +81,7 @@ public class ScheduledJobService {
         return new Airport[]{departureAirport, arrivalAirport};
     }
 
-    private LocalDateTime[] generateRandomDepartureAndReturnDateTimes() {
+    protected LocalDateTime[] generateRandomDepartureAndReturnDateTimes() {
         LocalDateTime departureDateTime = LocalDateTime.now()
                 .plusDays(ThreadLocalRandom.current().nextInt(1, 366))
                 .withHour(ThreadLocalRandom.current().nextInt(0, 24))
@@ -96,10 +96,12 @@ public class ScheduledJobService {
         return new LocalDateTime[]{departureDateTime, returnDateTime};
     }
 
-    private BigDecimal generateRandomPrice() {
+    protected BigDecimal generateRandomPrice() {
         double randomPrice = ThreadLocalRandom.current().nextDouble(50.0, 1000.0);
         return BigDecimal.valueOf(randomPrice).setScale(2, BigDecimal.ROUND_HALF_UP);
     }
+
+
 
 
 
