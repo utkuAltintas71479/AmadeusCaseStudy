@@ -82,10 +82,16 @@ public class ScheduledJobService {
     }
 
     private LocalDateTime[] generateRandomDepartureAndReturnDateTimes() {
-        LocalDateTime departureDateTime = LocalDateTime.now().plusDays(ThreadLocalRandom.current().nextInt(1, 366)).truncatedTo(ChronoUnit.MINUTES);;
+        LocalDateTime departureDateTime = LocalDateTime.now()
+                .plusDays(ThreadLocalRandom.current().nextInt(1, 366))
+                .withHour(ThreadLocalRandom.current().nextInt(0, 24))
+                .truncatedTo(ChronoUnit.HOURS);
         LocalDateTime returnDateTime = null;
         if (ThreadLocalRandom.current().nextDouble() >= 0.5) {
-            returnDateTime = departureDateTime.plusDays(ThreadLocalRandom.current().nextInt(1, 30)).truncatedTo(ChronoUnit.MINUTES);;
+            returnDateTime = departureDateTime
+                    .plusDays(ThreadLocalRandom.current().nextInt(1, 30))
+                    .withHour(ThreadLocalRandom.current().nextInt(0, 24))
+                    .truncatedTo(ChronoUnit.HOURS);
         }
         return new LocalDateTime[]{departureDateTime, returnDateTime};
     }
