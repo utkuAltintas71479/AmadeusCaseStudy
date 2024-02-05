@@ -21,7 +21,14 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<ErrorResponse> handleUserNameAlreadyInUseError(UserNameAlreadyInUseException userNameAlreadyInUseException) {
         ErrorResponse response = new ErrorResponse(userNameAlreadyInUseException.getMessage());
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(AuthorizationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ErrorResponse> handleAuthorizationError(AuthorizationException authorizationException) {
+        ErrorResponse response = new ErrorResponse(authorizationException.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
     }
 
 }
