@@ -2,7 +2,10 @@ package com.example.Amadeus.service;
 
 import com.example.Amadeus.dto.CreateNewUserRequestDTO;
 import com.example.Amadeus.dto.CreateNewUserResponseDTO;
+import com.example.Amadeus.dto.LoginUserRequestDTO;
+import com.example.Amadeus.dto.LoginUserResponseDTO;
 import com.example.Amadeus.entity.User;
+import com.example.Amadeus.exception.AuthorizationException;
 import com.example.Amadeus.repository.UserRepository;
 import com.example.Amadeus.exception.UserNameAlreadyInUseException;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,16 +34,18 @@ public class UserServiceTest {
     private UserService userService;
 
     private CreateNewUserRequestDTO newUserRequest;
+    private LoginUserRequestDTO loginUserRequestDTO;
 
     @BeforeEach
     void setUp() {
-        newUserRequest = new CreateNewUserRequestDTO();
-        newUserRequest.setUserName("TEST_USERNAME");
-        newUserRequest.setPassword("TEST_PASSWORD");
+
     }
 
     @Test
     void createUser_success() {
+        newUserRequest = new CreateNewUserRequestDTO();
+        newUserRequest.setUserName("TEST_USERNAME");
+        newUserRequest.setPassword("TEST_PASSWORD");
         when(userRepository.findByUserName(newUserRequest.getUserName())).thenReturn(Optional.empty());
         when(passwordEncoder.encode(newUserRequest.getPassword())).thenReturn("ENCODED_TEST_PASSWORD");
         CreateNewUserResponseDTO response = userService.createUser(newUserRequest);
@@ -51,6 +56,9 @@ public class UserServiceTest {
 
     @Test
     void createUser_failure_userNameAlreadyExists() {
+        newUserRequest = new CreateNewUserRequestDTO();
+        newUserRequest.setUserName("TEST_USERNAME");
+        newUserRequest.setPassword("TEST_PASSWORD");
         when(userRepository.findByUserName(newUserRequest.getUserName())).thenReturn(Optional.of(new User()));
         assertThrows(UserNameAlreadyInUseException.class, () -> userService.createUser(newUserRequest));
         verify(userRepository, never()).save(any(User.class));
@@ -69,4 +77,44 @@ public class UserServiceTest {
         boolean result = userService.isUsernameAlreadyInUse("TEST_USERNAME");
         assertFalse(result);
     }
+
+    @Test
+    void loginUser_success() {
+        loginUserRequestDTO = new LoginUserRequestDTO();
+        loginUserRequestDTO.setUserName("TEST_USERNAME");
+        loginUserRequestDTO.setPassword("TEST_PASSWORD");
+        User user = new User();
+        user.setUserName("TEST_USERNAME");
+        when(userRepository.findByUserName(loginUserRequestDTO.getUserName())).thenReturn(Optional.of(user));
+        when(passwordEncoder.matches(loginUserRequestDTO.getPassword(),user.getPassword())).thenReturn(true);
+        LoginUserResponseDTO loginUserResponseDTO = userService.loginUser(loginUserRequestDTO);
+        assertNotNull(loginUserResponseDTO);
+        assertEquals(loginUserRequestDTO.getUserName(), loginUserResponseDTO.getUserName());
+    }
+
+    @Test
+    void loginUser_failure_userNameInvalid() {
+        loginUserRequestDTO = new LoginUserRequestDTO();
+        loginUserRequestDTO.setUserName("TEST_USERNAME");
+        loginUserRequestDTO.setPassword("TEST_PASSWORD");
+        when(userRepository.findByUserName(loginUserRequestDTO.getUserName())).thenReturn(Optional.empty());
+        assertThrows(AuthorizationException.class, () -> userService.loginUser(loginUserRequestDTO));
+        verify(userRepository, never()).save(any(User.class));
+    }
+
+    @Test
+    void loginUser_failure_passwordInvalid() {
+        loginUserRequestDTO = new LoginUserRequestDTO();
+        loginUserRequestDTO.setUserName("TEST_USERNAME");
+        loginUserRequestDTO.setPassword("TEST_PASSWORD");
+        User user = new User();
+        user.setUserName("TEST_USERNAME");
+        when(userRepository.findByUserName(loginUserRequestDTO.getUserName())).thenReturn(Optional.of(user));
+        when(passwordEncoder.matches(loginUserRequestDTO.getPassword(),user.getPassword())).thenReturn(false);
+        assertThrows(AuthorizationException.class, () -> userService.loginUser(loginUserRequestDTO));
+        verify(userRepository, never()).save(any(User.class));
+    }
+
+
+
 }

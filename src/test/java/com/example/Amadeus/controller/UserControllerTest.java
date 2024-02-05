@@ -1,4 +1,7 @@
 package com.example.Amadeus.controller;
+import com.example.Amadeus.dto.LoginUserRequestDTO;
+import com.example.Amadeus.dto.LoginUserResponseDTO;
+import com.example.Amadeus.exception.AuthorizationException;
 import com.example.Amadeus.exception.UserNameAlreadyInUseException;
 import org.apache.catalina.User;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -76,7 +79,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void createUser_whenUsernameIsAlreadyInUse_shouldReturnBadRequest() throws Exception {
+    public void createUser_whenUsernameIsAlreadyInUse_shouldReturnConflict() throws Exception {
         CreateNewUserRequestDTO requestDTO = new CreateNewUserRequestDTO();
         requestDTO.setUserName("TEST_USER_NAME");
         requestDTO.setPassword("TEST_PASSWORD");
@@ -85,7 +88,7 @@ public class UserControllerTest {
         mockMvc.perform(post("/createNewUser")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(requestDTO)))
-                .andExpect(status().isBadRequest())
+                .andExpect(status().isConflict())
                 .andExpect(result -> assertTrue(result.getResolvedException() instanceof UserNameAlreadyInUseException))
                 .andExpect(jsonPath("$.error").exists());
     }
@@ -101,5 +104,77 @@ public class UserControllerTest {
                 .andExpect(status().isBadRequest())
                 .andExpect(result -> assertTrue(result.getResolvedException() instanceof MethodArgumentNotValidException))
                 .andExpect(jsonPath("$.error").exists());
+    }
+
+    @Test
+    public void loginUser_whenPasswordIsEmpty_shouldReturnBadRequest() throws Exception {
+        LoginUserRequestDTO loginUserRequestDTO = new LoginUserRequestDTO();
+        loginUserRequestDTO.setUserName("TEST_USER_NAME");
+        loginUserRequestDTO.setPassword("");
+        mockMvc.perform(post("/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(loginUserRequestDTO)))
+                .andExpect(status().isBadRequest())
+                .andExpect(result -> assertTrue(result.getResolvedException() instanceof MethodArgumentNotValidException))
+                .andExpect(jsonPath("$.error").exists());
+    }
+
+    @Test
+    public void loginUser_whenUserNameIsEmpty_shouldReturnBadRequest() throws Exception {
+        LoginUserRequestDTO loginUserRequestDTO = new LoginUserRequestDTO();
+        loginUserRequestDTO.setUserName("");
+        loginUserRequestDTO.setPassword("TEST_PASSWORD");
+        mockMvc.perform(post("/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(loginUserRequestDTO)))
+                .andExpect(status().isBadRequest())
+                .andExpect(result -> assertTrue(result.getResolvedException() instanceof MethodArgumentNotValidException))
+                .andExpect(jsonPath("$.error").exists());
+    }
+
+    @Test
+    public void loginUser_whenUsernameIsInvalid_shouldReturnUnauthorized() throws Exception {
+        CreateNewUserRequestDTO requestDTO = new CreateNewUserRequestDTO();
+        requestDTO.setUserName("TEST_USER_NAME");
+        requestDTO.setPassword("TEST_PASSWORD");
+        doThrow(new AuthorizationException("Username is invalid"))
+                .when(userService).loginUser(any(LoginUserRequestDTO.class));
+        mockMvc.perform(post("/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(requestDTO)))
+                .andExpect(status().isUnauthorized())
+                .andExpect(result -> assertTrue(result.getResolvedException() instanceof AuthorizationException))
+                .andExpect(jsonPath("$.error").exists());
+    }
+
+    @Test
+    public void loginUser_whenPasswordIsInvalid_shouldReturnUnauthorized() throws Exception {
+        CreateNewUserRequestDTO requestDTO = new CreateNewUserRequestDTO();
+        requestDTO.setUserName("TEST_USER_NAME");
+        requestDTO.setPassword("TEST_PASSWORD");
+        doThrow(new AuthorizationException("Password is invalid"))
+                .when(userService).loginUser(any(LoginUserRequestDTO.class));
+        mockMvc.perform(post("/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(requestDTO)))
+                .andExpect(status().isUnauthorized())
+                .andExpect(result -> assertTrue(result.getResolvedException() instanceof AuthorizationException))
+                .andExpect(jsonPath("$.error").exists());
+    }
+
+    @Test
+    public void loginUser_whenPostMethod() throws Exception {
+        LoginUserRequestDTO loginUserRequestDTO = new LoginUserRequestDTO();
+        loginUserRequestDTO.setUserName("TEST_USER_NAME");
+        loginUserRequestDTO.setPassword("TEST_PASSWORD");
+        LoginUserResponseDTO loginUserResponseDTO = new LoginUserResponseDTO();
+        loginUserResponseDTO.setUserName("TEST_USER_NAME");
+        when(userService.loginUser(any(LoginUserRequestDTO.class))).thenReturn(loginUserResponseDTO);
+        mockMvc.perform(post("/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(loginUserRequestDTO)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.userName").value(loginUserResponseDTO.getUserName()));
+        verify(userService).loginUser(any(LoginUserRequestDTO.class));
     }
 }
