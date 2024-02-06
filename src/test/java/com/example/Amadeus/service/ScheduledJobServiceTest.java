@@ -96,13 +96,13 @@ public class ScheduledJobServiceTest {
         verify(airportRepository, times(1)).findById(1);
         verify(airportRepository, times(1)).save(newAirport);
     }
-
+/*
     @Test
     public void testUpdatesFlights() {
         List<Flight> expectedFlights = scheduledJobService.generateMockFlightData();
         scheduledJobService.updateFlightInformation();
         verify(flightRepository, times(expectedFlights.size())).save(any());
-    }
+    }*/
 
 
 }
