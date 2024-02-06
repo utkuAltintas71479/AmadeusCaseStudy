@@ -1,39 +1,35 @@
-package com.example.Amadeus.entity;
+package com.example.Amadeus.dto;
 
-import jakarta.persistence.*;
+import com.example.Amadeus.entity.Airport;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Entity
-public class Flight {
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Integer flightId;
-
-    @ManyToOne
-    @JoinColumn(name = "departureAirportID", nullable = false)
+public class UpdateFlightResponseDTO {
+    private String message;
     private Airport departureAirport;
 
-    @ManyToOne
-    @JoinColumn(name = "arrivalAirportID", nullable = false)
+
     private Airport arrivalAirport;
 
-    @Column(nullable = false)
+
     private LocalDateTime departureDateTime;
 
-    @Column
+
     private LocalDateTime returnDateTime;
 
-    @Column(nullable = false, precision = 10, scale = 2)
+
     private BigDecimal price;
 
-    public Integer getFlightId() {
-        return flightId;
-    }
 
-    public void setFlightId(Integer flightId) {
-        this.flightId = flightId;
+    public UpdateFlightResponseDTO(Airport departureAirport, Airport arrivalAirport, LocalDateTime departureDateTime, LocalDateTime returnDateTime, BigDecimal price) {
+        this.message = "Flight Updated successfuly";
+        this.departureAirport = departureAirport;
+        this.arrivalAirport = arrivalAirport;
+        this.departureDateTime = departureDateTime;
+        this.returnDateTime = returnDateTime;
+        this.price = price;
+
     }
 
     public Airport getDepartureAirport() {
@@ -74,5 +70,13 @@ public class Flight {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

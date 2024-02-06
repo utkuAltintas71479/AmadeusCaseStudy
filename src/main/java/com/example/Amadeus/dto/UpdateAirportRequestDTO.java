@@ -1,18 +1,16 @@
 package com.example.Amadeus.dto;
 
 import jakarta.annotation.Nullable;
-import jakarta.validation.constraints.NotBlank;
 
 public class UpdateAirportRequestDTO {
-    @NotBlank(message = "A city name should be provided for update")
-    private String city;
+    private String airportCity;
 
     @Nullable
-    public String getCity() {
-        return city;
+    public String getAirportCity() {
+        return airportCity;
     }
 
-    public void setCity(@Nullable String city) {
-        this.city = city;
+    public void setAirportCity(@Nullable String airportCity) {
+        this.airportCity = airportCity;
     }
 }

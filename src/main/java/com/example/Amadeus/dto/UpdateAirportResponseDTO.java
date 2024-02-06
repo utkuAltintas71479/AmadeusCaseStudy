@@ -1,16 +1,23 @@
 package com.example.Amadeus.dto;
 
 public class UpdateAirportResponseDTO {
-    private Integer id;
     private String message;
-    private String city;
+    private Integer airportId;
 
-    public Integer getId() {
-        return id;
+    private String airportCity;
+
+    public UpdateAirportResponseDTO(Integer airportId, String airportCity) {
+        this.airportId = airportId;
+        this.message = "AirportUpdated successfully";
+        this.airportCity = airportCity;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public Integer getAirportId() {
+        return airportId;
+    }
+
+    public void setAirportId(Integer airportId) {
+        this.airportId = airportId;
     }
 
     public String getMessage() {
@@ -21,17 +28,11 @@ public class UpdateAirportResponseDTO {
         this.message = message;
     }
 
-    public String getCity() {
-        return city;
+    public String getAirportCity() {
+        return airportCity;
     }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public UpdateAirportResponseDTO(Integer id, String message, String city) {
-        this.id = id;
-        this.message = message;
-        this.city = city;
+    public void setAirportCity(String airportCity) {
+        this.airportCity = airportCity;
     }
 }

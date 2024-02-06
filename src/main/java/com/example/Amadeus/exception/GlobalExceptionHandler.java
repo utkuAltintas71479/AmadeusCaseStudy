@@ -40,4 +40,28 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(AirportMismatchException.class)
+    public ResponseEntity<ErrorResponse> handleAirportMismatchException(AirportMismatchException airportMismatchException) {
+        ErrorResponse response = new ErrorResponse(airportMismatchException.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(DateMismatchException.class)
+    public ResponseEntity<ErrorResponse> handleDateMismatchException(DateMismatchException dateMismatchException) {
+        ErrorResponse response = new ErrorResponse(dateMismatchException.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(NoSuchFlightException.class)
+    public ResponseEntity<ErrorResponse> handleNoSuchFlightException(NoSuchFlightException noSuchFlightException) {
+        ErrorResponse response = new ErrorResponse(noSuchFlightException.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(NoFlightException.class)
+    public ResponseEntity<ErrorResponse> handleNoFlightException(NoFlightException noFlightException) {
+        ErrorResponse response = new ErrorResponse(noFlightException.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
 }

@@ -1,27 +1,27 @@
 package com.example.Amadeus.dto;
 
 public class AirportDTO {
-    Integer id;
-    String city;
+    Integer airportId;
+    String airportCity;
 
-    public Integer getId() {
-        return id;
+    public AirportDTO(Integer airportId, String airportCity) {
+        this.airportId = airportId;
+        this.airportCity = airportCity;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public Integer getAirportId() {
+        return airportId;
     }
 
-    public String getCity() {
-        return city;
+    public void setAirportId(Integer airportId) {
+        this.airportId = airportId;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public String getAirportCity() {
+        return airportCity;
     }
 
-    public AirportDTO(Integer id, String city) {
-        this.id = id;
-        this.city = city;
+    public void setAirportCity(String airportCity) {
+        this.airportCity = airportCity;
     }
 }

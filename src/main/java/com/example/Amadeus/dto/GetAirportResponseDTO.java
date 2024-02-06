@@ -1,39 +1,30 @@
 package com.example.Amadeus.dto;
 
-import jakarta.persistence.Column;
-
 public class GetAirportResponseDTO {
-    private Integer id;
+    private final String message;
+    private Integer airportId;
+    private String airportCity;
 
-    public GetAirportResponseDTO(Integer id, String message, String city) {
-        this.id = id;
-        this.message = message;
-        this.city = city;
+
+    public GetAirportResponseDTO(Integer airportId, String airportCity) {
+        this.airportId = airportId;
+        this.message = "Airport retrieved Successfully";
+        this.airportCity = airportCity;
     }
 
-    private String message;
-
-
-    public Integer getId() {
-        return id;
+    public Integer getAirportId() {
+        return airportId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setAirportId(Integer airportId) {
+        this.airportId = airportId;
     }
 
-    public String getCity() {
-        return city;
+    public String getAirportCity() {
+        return airportCity;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setAirportCity(String airportCity) {
+        this.airportCity = airportCity;
     }
-
-    public GetAirportResponseDTO(Integer id, String city) {
-        this.id = id;
-        this.city = city;
-    }
-
-    private String city;
 }
