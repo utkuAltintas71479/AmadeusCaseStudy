@@ -1,13 +1,19 @@
 package com.example.Amadeus.dto;
 
 public class CreateNewUserResponseDTO {
+    private String message;
     private Integer userId;
     private String userName;
 
-    private String message;
 
     // Constructors
     public CreateNewUserResponseDTO() {
+    }
+
+    public CreateNewUserResponseDTO(Integer userId, String userName) {
+        this.userId = userId;
+        this.userName = userName;
+        this.message = "User created successfuly";
     }
 
     public String getMessage() {
@@ -15,12 +21,6 @@ public class CreateNewUserResponseDTO {
     }
 
     public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public CreateNewUserResponseDTO(Integer userId, String userName, String message) {
-        this.userId = userId;
-        this.userName = userName;
         this.message = message;
     }
 

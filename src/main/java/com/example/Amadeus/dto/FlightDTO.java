@@ -1,32 +1,39 @@
-package com.example.Amadeus.entity;
+package com.example.Amadeus.dto;
 
-import jakarta.persistence.*;
+import com.example.Amadeus.entity.Airport;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Entity
-public class Flight {
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+public class FlightDTO {
+
+
     private Integer flightId;
 
-    @ManyToOne
-    @JoinColumn(name = "departureAirportID", nullable = false)
-    private Airport departureAirport;
 
-    @ManyToOne
-    @JoinColumn(name = "arrivalAirportID", nullable = false)
-    private Airport arrivalAirport;
+    private AirportDTO departureAirport;
 
-    @Column(nullable = false)
+
+    private AirportDTO arrivalAirport;
+
+
     private LocalDateTime departureDateTime;
 
-    @Column
+
     private LocalDateTime returnDateTime;
 
-    @Column(nullable = false, precision = 10, scale = 2)
+
     private BigDecimal price;
+
+
+    public FlightDTO(Integer flightId, AirportDTO departureAirport, AirportDTO arrivalAirport, LocalDateTime departureDateTime, LocalDateTime returnDateTime, BigDecimal price) {
+        this.flightId = flightId;
+        this.departureAirport = departureAirport;
+        this.arrivalAirport = arrivalAirport;
+        this.departureDateTime = departureDateTime;
+        this.returnDateTime = returnDateTime;
+        this.price = price;
+    }
 
     public Integer getFlightId() {
         return flightId;
@@ -36,19 +43,19 @@ public class Flight {
         this.flightId = flightId;
     }
 
-    public Airport getDepartureAirport() {
+    public AirportDTO getDepartureAirport() {
         return departureAirport;
     }
 
-    public void setDepartureAirport(Airport departureAirport) {
+    public void setDepartureAirport(AirportDTO departureAirport) {
         this.departureAirport = departureAirport;
     }
 
-    public Airport getArrivalAirport() {
+    public AirportDTO getArrivalAirport() {
         return arrivalAirport;
     }
 
-    public void setArrivalAirport(Airport arrivalAirport) {
+    public void setArrivalAirport(AirportDTO arrivalAirport) {
         this.arrivalAirport = arrivalAirport;
     }
 
@@ -75,4 +82,5 @@ public class Flight {
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
+
 }

@@ -1,6 +1,8 @@
 package com.example.Amadeus.dto;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+
 public class CreateNewUserRequestDTO {
     @NotBlank(message = "Username is required")
     private String userName;

@@ -7,5 +7,4 @@ import java.util.Optional;
 
 public interface AirportRepository extends JpaRepository<Airport, Integer> {
 
-    Optional<Airport> findByCity(String city);
 }

@@ -1,8 +1,9 @@
 package com.example.Amadeus.dto;
 
 public class LoginUserResponseDTO {
-    private String userName;
     private String message;
+    private String userName;
+
 
     public LoginUserResponseDTO() {
     }
@@ -15,9 +16,9 @@ public class LoginUserResponseDTO {
         this.message = message;
     }
 
-    public LoginUserResponseDTO(String userName, String message) {
+    public LoginUserResponseDTO(String userName ) {
         this.userName = userName;
-        this.message = message;
+        this.message = "Login successful";
     }
 
     public String getUserName() {

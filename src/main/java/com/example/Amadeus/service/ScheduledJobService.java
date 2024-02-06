@@ -5,9 +5,7 @@ import com.example.Amadeus.entity.Flight;
 import com.example.Amadeus.repository.AirportRepository;
 import com.example.Amadeus.repository.FlightRepository;
 import com.example.Amadeus.util.Constants;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -15,7 +13,6 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 @Service
 public class ScheduledJobService {
@@ -41,7 +38,7 @@ public class ScheduledJobService {
     }*/
 
     protected Airport findOrCreateAirport(Airport airport) {
-        Airport existingAirport = airportRepository.findById(airport.getId()).orElse(null);
+        Airport existingAirport = airportRepository.findById(airport.getAirportId()).orElse(null);
         if (existingAirport != null) {
             return existingAirport;
         } else {
@@ -69,15 +66,15 @@ public class ScheduledJobService {
     protected Airport[] generateMockAirports() {
         Airport departureAirport = new Airport();
         int departureAirportId = ThreadLocalRandom.current().nextInt(1,Constants.AIRPORT_CITIES.length+1);
-        departureAirport.setId(departureAirportId);
-        departureAirport.setCity(Constants.AIRPORT_CITIES[departureAirportId-1]);
+        departureAirport.setAirportId(departureAirportId);
+        departureAirport.setAirportCity(Constants.AIRPORT_CITIES[departureAirportId-1]);
         Airport arrivalAirport = new Airport();
         int arrivalAirportId = ThreadLocalRandom.current().nextInt(1,Constants.AIRPORT_CITIES.length+1);
         while(arrivalAirportId == departureAirportId) {
             arrivalAirportId = ThreadLocalRandom.current().nextInt(1,Constants.AIRPORT_CITIES.length);
         }
-        arrivalAirport.setId(arrivalAirportId);
-        arrivalAirport.setCity(Constants.AIRPORT_CITIES[arrivalAirportId-1]);
+        arrivalAirport.setAirportId(arrivalAirportId);
+        arrivalAirport.setAirportCity(Constants.AIRPORT_CITIES[arrivalAirportId-1]);
         return new Airport[]{departureAirport, arrivalAirport};
     }
 

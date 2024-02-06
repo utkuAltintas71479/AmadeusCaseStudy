@@ -3,8 +3,11 @@ package com.example.Amadeus.dto;
 import java.util.List;
 
 public class GetAllAirportsResponseDTO {
-    public GetAllAirportsResponseDTO(String message, List<AirportDTO> airports) {
-        this.message = message;
+    String message;
+    private List<AirportDTO> airports;
+
+    public GetAllAirportsResponseDTO(List<AirportDTO> airports) {
+        this.message = "Airports retrieved successfully";
         this.airports = airports;
     }
 
@@ -12,17 +15,8 @@ public class GetAllAirportsResponseDTO {
         return airports;
     }
 
-    String message;
-
     public void setAirports(List<AirportDTO> airports) {
         this.airports = airports;
     }
-
-    public GetAllAirportsResponseDTO(List<AirportDTO> airports) {
-
-        this.airports = airports;
-    }
-
-    private List<AirportDTO> airports;
 
 }

@@ -52,11 +52,11 @@ public class ScheduledJobServiceTest {
     @Test
     public void testGenerateMockAirport() {
         Airport[] airports = scheduledJobService.generateMockAirports();
-        String departureCity = airports[0].getCity();
-        String arrivalCity = airports[1].getCity();
-        assertNotEquals(airports[0].getId(), airports[1].getId());
-        assertTrue(airports[0].getId() >= 1 && airports[0].getId() <= Constants.AIRPORT_CITIES.length);
-        assertTrue(airports[1].getId() >= 1 && airports[1].getId() <= Constants.AIRPORT_CITIES.length);
+        String departureCity = airports[0].getAirportCity();
+        String arrivalCity = airports[1].getAirportCity();
+        assertNotEquals(airports[0].getAirportId(), airports[1].getAirportId());
+        assertTrue(airports[0].getAirportId() >= 1 && airports[0].getAirportId() <= Constants.AIRPORT_CITIES.length);
+        assertTrue(airports[1].getAirportId() >= 1 && airports[1].getAirportId() <= Constants.AIRPORT_CITIES.length);
         assertTrue(Arrays.asList(Constants.AIRPORT_CITIES).contains(departureCity));
         assertTrue(Arrays.asList(Constants.AIRPORT_CITIES).contains(arrivalCity));
     }
@@ -76,8 +76,8 @@ public class ScheduledJobServiceTest {
     @Test
     public void testFindOrCreateAirportExistingAirport() {
         Airport existingAirport = new Airport();
-        existingAirport.setId(1);
-        existingAirport.setCity("TEST");
+        existingAirport.setAirportId(1);
+        existingAirport.setAirportCity("TEST");
         when(airportRepository.findById(1)).thenReturn(Optional.of(existingAirport));
         Airport foundAirport = scheduledJobService.findOrCreateAirport(existingAirport);
         assertSame(existingAirport, foundAirport);
@@ -88,7 +88,7 @@ public class ScheduledJobServiceTest {
     @Test
     public void testFindOrCreateAirportCreatesNewAirport() {
         Airport newAirport = new Airport();
-        newAirport.setId(1);
+        newAirport.setAirportId(1);
         when(airportRepository.save(newAirport)).thenReturn(newAirport);
         when(airportRepository.findById(1)).thenReturn(Optional.empty());
         Airport savedAirport = scheduledJobService.findOrCreateAirport(newAirport);

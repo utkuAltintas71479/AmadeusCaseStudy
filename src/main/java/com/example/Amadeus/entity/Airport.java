@@ -6,24 +6,24 @@ import jakarta.persistence.*;
 public class Airport {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Integer id;
+    private Integer airportId;
 
     @Column(nullable = false, length = 255)
-    private String city;
+    private String airportCity;
 
-    public Integer getId() {
-        return id;
+    public Integer getAirportId() {
+        return airportId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setAirportId(Integer airportId) {
+        this.airportId = airportId;
     }
 
-    public String getCity() {
-        return city;
+    public String getAirportCity() {
+        return airportCity;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setAirportCity(String airportCity) {
+        this.airportCity = airportCity;
     }
 }
