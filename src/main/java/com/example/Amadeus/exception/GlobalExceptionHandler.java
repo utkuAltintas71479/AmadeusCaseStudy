@@ -63,5 +63,10 @@ public class GlobalExceptionHandler {
         ErrorResponse response = new ErrorResponse(noFlightException.getMessage());
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
+    @ExceptionHandler(NoSuitableFlightException.class)
+    public ResponseEntity<ErrorResponse> handleNoSuitableFlightException(NoSuitableFlightException noSuitableFlightException) {
+        ErrorResponse response = new ErrorResponse(noSuitableFlightException.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
 
 }
