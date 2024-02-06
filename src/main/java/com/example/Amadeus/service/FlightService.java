@@ -39,7 +39,7 @@ public class FlightService {
         flight.setArrivalAirport(airportsForFlight[1]);
         flightRepository.save(flight);
         Airport departureAirport = flight.getDepartureAirport();
-        Airport arrivalAirport = flight.getDepartureAirport();
+        Airport arrivalAirport = flight.getArrivalAirport();
         return new CreateFlightResponseDTO(flight.getFlightId(),  new AirportDTO(departureAirport.getAirportId(),departureAirport.getAirportCity()),new AirportDTO(arrivalAirport.getAirportId(),arrivalAirport.getAirportCity()),
         flight.getDepartureDateTime(),  flight.getReturnDateTime(), flight.getPrice());
     }
