@@ -27,7 +27,7 @@ public class ScheduledJobService {
 
 
 
-    @Scheduled(cron = "0 * * * * ?")
+    /*@Scheduled(cron = "0 * * * * ?")
     @Transactional
     public void updateFlightInformation() {
         List<Flight> flights = generateMockFlightData();
@@ -38,7 +38,7 @@ public class ScheduledJobService {
             flight.setArrivalAirport(arrivalAirport);
             flightRepository.save(flight);
         }
-    }
+    }*/
 
     protected Airport findOrCreateAirport(Airport airport) {
         Airport existingAirport = airportRepository.findById(airport.getId()).orElse(null);

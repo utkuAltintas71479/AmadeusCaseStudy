@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 @Entity
 public class Airport {
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
 
     @Column(nullable = false, length = 255)

@@ -30,7 +30,7 @@ public class UserService {
         user.setUserName(createNewUserRequestDTO.getUserName());
         user.setPassword(passwordEncoder.encode(createNewUserRequestDTO.getPassword()));
         userRepository.save(user);
-        return new CreateNewUserResponseDTO(user.getUserId(), user.getUserName());
+        return new CreateNewUserResponseDTO(user.getUserId(), user.getUserName(),"User created successfully");
     }
 
     public LoginUserResponseDTO loginUser(LoginUserRequestDTO loginUserRequestDTO) {
@@ -39,7 +39,7 @@ public class UserService {
         if (!passwordEncoder.matches(loginUserRequestDTO.getPassword(), user.getPassword())) {
             throw new AuthorizationException("Invalid password");
         }
-        return new LoginUserResponseDTO(user.getUserName());
+        return new LoginUserResponseDTO(user.getUserName(),"Login successful");
     }
 
 

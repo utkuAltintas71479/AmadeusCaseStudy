@@ -4,13 +4,24 @@ public class CreateNewUserResponseDTO {
     private Integer userId;
     private String userName;
 
+    private String message;
+
     // Constructors
     public CreateNewUserResponseDTO() {
     }
 
-    public CreateNewUserResponseDTO(Integer userId, String userName) {
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public CreateNewUserResponseDTO(Integer userId, String userName, String message) {
         this.userId = userId;
         this.userName = userName;
+        this.message = message;
     }
 
     public Integer getUserId() {
