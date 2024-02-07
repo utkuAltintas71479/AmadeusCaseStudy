@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,7 +23,7 @@ public class searchController {
     @Autowired
     private SearchService searchService;
 
-    @GetMapping("/flights/search")
+    @PostMapping("/flights/search")
     @Operation(summary = "Find your perfect flight", description = "Search for flights that match your travel needs and preferences using the provided details. Considers the flights that are in the same day with the provided date information in the request body.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Matching flights found successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = SearchedFlightResponseDTO.class))),
