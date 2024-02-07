@@ -27,12 +27,8 @@ public class ScheduledJobService {
 
     @Scheduled(cron = "0 */1 * * * ?")
     public void mockApiCall() {
-        try {
-            RestTemplate restTemplate = new RestTemplate();
-            ResponseEntity<String> response = restTemplate.postForEntity("http://localhost:8080/generate-flights", null, String.class);
-        } catch (Exception e) {
-            System.out.println(Constants.MOCK_API_ERROR);
-        }
+
+        generateMockFlights();
     }
     public void generateMockFlights() {
         List<Flight> generatedFlightEntities = new ArrayList<>();
@@ -41,6 +37,9 @@ public class ScheduledJobService {
             List<Airport> airportEntities = airportRepository.findAll();
             int randomAirportIndexDeparture=0;
             int randomAirportIndexArrival=0;
+            if(airportEntities.isEmpty()){
+                continue;
+            }
             while (randomAirportIndexDeparture==randomAirportIndexArrival){
                 randomAirportIndexDeparture = new Random().nextInt(airportEntities.size());
                 randomAirportIndexArrival = new Random().nextInt(airportEntities.size());

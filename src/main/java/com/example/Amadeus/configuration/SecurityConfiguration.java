@@ -26,8 +26,8 @@ public class SecurityConfiguration {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/createNewUser").permitAll()
-                        .requestMatchers("/generate-flights").permitAll()
+                        .requestMatchers("/users/create").permitAll()
+                        .requestMatchers("/swagger-ui/index.html").permitAll()
                         .anyRequest().authenticated())
                 .httpBasic(withDefaults());
 
