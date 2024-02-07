@@ -1,5 +1,6 @@
 package com.example.Amadeus.entity;
 
+import com.example.Amadeus.util.Constants;
 import jakarta.persistence.*;
 
 @Entity
@@ -8,7 +9,7 @@ public class Airport {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer airportId;
 
-    @Column(nullable = false, length = 255)
+    @Column(nullable = false, length = Constants.MAX_CITY_NAME_LENGTH)
     private String airportCity;
 
     public Integer getAirportId() {

@@ -1,9 +1,10 @@
-package com.example.Amadeus.dto;
+package com.example.Amadeus.dto.request;
 
+import com.example.Amadeus.util.Constants;
 import jakarta.validation.constraints.NotNull;
 
 public class DeleteAirportRequestDTO {
-    @NotNull(message = "id is required")
+    @NotNull(message = Constants.ID_REQUIRED)
     private Integer airportId;
 
     public Integer getAirportId() {

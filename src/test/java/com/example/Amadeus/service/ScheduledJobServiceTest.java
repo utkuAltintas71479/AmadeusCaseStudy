@@ -51,21 +51,21 @@ public class ScheduledJobServiceTest {
 
     @Test
     public void testGenerateMockAirport() {
-        Airport[] airports = scheduledJobService.generateMockAirports();
-        String departureCity = airports[0].getAirportCity();
-        String arrivalCity = airports[1].getAirportCity();
-        assertNotEquals(airports[0].getAirportId(), airports[1].getAirportId());
-        assertTrue(airports[0].getAirportId() >= 1 && airports[0].getAirportId() <= Constants.AIRPORT_CITIES.length);
-        assertTrue(airports[1].getAirportId() >= 1 && airports[1].getAirportId() <= Constants.AIRPORT_CITIES.length);
+        Airport[] airportEntities = scheduledJobService.generateMockAirports();
+        String departureCity = airportEntities[0].getAirportCity();
+        String arrivalCity = airportEntities[1].getAirportCity();
+        assertNotEquals(airportEntities[0].getAirportId(), airportEntities[1].getAirportId());
+        assertTrue(airportEntities[0].getAirportId() >= 1 && airportEntities[0].getAirportId() <= Constants.AIRPORT_CITIES.length);
+        assertTrue(airportEntities[1].getAirportId() >= 1 && airportEntities[1].getAirportId() <= Constants.AIRPORT_CITIES.length);
         assertTrue(Arrays.asList(Constants.AIRPORT_CITIES).contains(departureCity));
         assertTrue(Arrays.asList(Constants.AIRPORT_CITIES).contains(arrivalCity));
     }
 
     @Test
     public void testGenerateMockFlights() {
-        List<Flight> flights = scheduledJobService.generateMockFlightData();
-        assertEquals(10, flights.size());
-        for (Flight flight : flights) {
+        List<Flight> flightEntities = scheduledJobService.generateMockFlightData();
+        assertEquals(10, flightEntities.size());
+        for (Flight flight : flightEntities) {
             assertNotNull(flight.getDepartureAirport());
             assertNotNull(flight.getArrivalAirport());
             assertNotNull(flight.getDepartureDateTime());

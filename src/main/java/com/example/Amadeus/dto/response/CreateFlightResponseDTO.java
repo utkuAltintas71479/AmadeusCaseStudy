@@ -1,6 +1,8 @@
-package com.example.Amadeus.dto;
+package com.example.Amadeus.dto.response;
 
-import com.example.Amadeus.entity.Airport;
+import com.example.Amadeus.dto.AirportDTO;
+import com.example.Amadeus.util.Constants;
+import org.aspectj.apache.bcel.classfile.Constant;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -17,7 +19,7 @@ public class CreateFlightResponseDTO {
 
     public CreateFlightResponseDTO(int flightId, AirportDTO departureAirport, AirportDTO arrivalAirport, LocalDateTime departureDateTime, LocalDateTime returnDateTime, BigDecimal price) {
         this.flightId = flightId;
-        this.message = "Flight created Successfully";
+        this.message = Constants.FLIGHT_CREATION_SUCCESS;
         this.departureAirport = departureAirport;
         this.arrivalAirport = arrivalAirport;
         this.departureDateTime = departureDateTime;

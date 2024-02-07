@@ -1,5 +1,6 @@
-package com.example.Amadeus.dto;
+package com.example.Amadeus.dto.request;
 
+import com.example.Amadeus.util.Constants;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.cglib.core.Local;
 
@@ -7,11 +8,11 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class SearchFlightRequestDTO {
-    @NotNull(message = "departure airport should be set")
+    @NotNull(message = Constants.DEPARTURE_AIRPORT_PLACE_REQUIRED)
     String departurePlace;
-    @NotNull(message = "arrival airport should be set")
+    @NotNull(message = Constants.ARRIVAL_AIRPORT_PLACE_REQUIRED)
     String arrivalPlace;
-    @NotNull(message = "departure date should be set")
+    @NotNull(message = Constants.DEPARTURE_DATE_REQUIRED)
     LocalDate departureDate;
     LocalDate returnDate;
 

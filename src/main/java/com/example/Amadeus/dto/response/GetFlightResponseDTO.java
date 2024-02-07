@@ -1,6 +1,7 @@
-package com.example.Amadeus.dto;
+package com.example.Amadeus.dto.response;
 
 import com.example.Amadeus.entity.Airport;
+import com.example.Amadeus.util.Constants;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -31,7 +32,7 @@ public class GetFlightResponseDTO {
         this.departureDateTime = departureDateTime;
         this.returnDateTime = returnDateTime;
         this.price = price;
-        this.message = "Flight retrieved successfully";
+        this.message = Constants.FLIGHT_RETRIEVAL_SUCCESS;
     }
 
     public Integer getFlightId() {

@@ -1,11 +1,18 @@
 package com.example.Amadeus.service;
 
 import com.example.Amadeus.dto.*;
+import com.example.Amadeus.dto.request.CreateFlightRequestDTO;
+import com.example.Amadeus.dto.request.UpdateFlightRequestDTO;
+import com.example.Amadeus.dto.response.CreateFlightResponseDTO;
+import com.example.Amadeus.dto.response.GetAllFlightsResponseDTO;
+import com.example.Amadeus.dto.response.GetFlightResponseDTO;
+import com.example.Amadeus.dto.response.UpdateFlightResponseDTO;
 import com.example.Amadeus.entity.Airport;
 import com.example.Amadeus.entity.Flight;
 import com.example.Amadeus.exception.*;
 import com.example.Amadeus.repository.AirportRepository;
 import com.example.Amadeus.repository.FlightRepository;
+import com.example.Amadeus.util.Constants;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,11 +32,11 @@ public class FlightService {
         Flight flight = new Flight();
         if (createFlightRequestDTO.getReturnDateTime() != null) {
             if (createFlightRequestDTO.getDepartureDateTime().isAfter(createFlightRequestDTO.getReturnDateTime())) {
-                throw new DateMismatchException("Departure time cannot be after return time");
+                throw new DateMismatchException(Constants.DATE_MISMATCH_DEPARTURE_AFTER_RETURN);
             }
         }
         if(createFlightRequestDTO.getDepartureAirportId() == createFlightRequestDTO.getArrivalAirportId()){
-            throw new AirportMismatchException("Arrival and departure airports cannot be the same");
+            throw new AirportMismatchException(Constants.AIRPORT_MISMATCH);
         }
         flight.setPrice(createFlightRequestDTO.getPrice());
         flight.setReturnDateTime(createFlightRequestDTO.getReturnDateTime());
@@ -40,49 +47,49 @@ public class FlightService {
         flightRepository.save(flight);
         Airport departureAirport = flight.getDepartureAirport();
         Airport arrivalAirport = flight.getArrivalAirport();
-        return new CreateFlightResponseDTO(flight.getFlightId(),  new AirportDTO(departureAirport.getAirportId(),departureAirport.getAirportCity()),new AirportDTO(arrivalAirport.getAirportId(),arrivalAirport.getAirportCity()),
+        return new CreateFlightResponseDTO(flight.getFlightId(),  new AirportDTO(departureAirport.getAirportId(), departureAirport.getAirportCity()),new AirportDTO(arrivalAirport.getAirportId(), arrivalAirport.getAirportCity()),
         flight.getDepartureDateTime(),  flight.getReturnDateTime(), flight.getPrice());
     }
 
     public Airport[] getAirportsForFlight(CreateFlightRequestDTO createFlightRequestDTO){
         if (!(airportRepository.existsById(createFlightRequestDTO.getArrivalAirportId()) &&
                 airportRepository.existsById(createFlightRequestDTO.getDepartureAirportId()))) {
-            throw new NoSuchAirportException("One or more specified airports do not exist");
+            throw new NoSuchAirportException(Constants.NO_SUCH_AIRPORT);
         }
         Airport arrivalAirport = airportRepository.getById(createFlightRequestDTO.getArrivalAirportId());
         Airport depratureAirport = airportRepository.getById(createFlightRequestDTO.getDepartureAirportId());
-        return new Airport[]{depratureAirport,arrivalAirport};
+        return new Airport[]{depratureAirport, arrivalAirport};
     }
 
     @Transactional
     public void deleteFlight( Integer flightId) {
-        Flight flightToDelete = flightRepository.findById(flightId).orElseThrow(() -> new NoSuchFlightException("There is no flight with this Id"));
+        Flight flightToDelete = flightRepository.findById(flightId).orElseThrow(() -> new NoSuchFlightException(Constants.NO_SUCH_FLIGHT));
         flightRepository.delete(flightToDelete);
     }
 
 
     @Transactional
     public GetAllFlightsResponseDTO getAllFlights() {
-        List<Flight> listOfFlights = flightRepository.findAll();
-        if(listOfFlights.isEmpty()){
-            throw new NoFlightException("There is no flight in the database yet");
+        List<Flight> listOfFlightEntities = flightRepository.findAll();
+        if(listOfFlightEntities.isEmpty()){
+            throw new NoFlightException(Constants.NO_FLIGHT_IN_DB);
         }
         List<FlightDTO> listOfFlightDTOs = new ArrayList<>();
-        for (Flight flight : listOfFlights){
-            listOfFlightDTOs.add(new FlightDTO(flight.getFlightId(), new AirportDTO(flight.getDepartureAirport().getAirportId(),flight.getDepartureAirport().getAirportCity()), new AirportDTO(flight.getArrivalAirport().getAirportId(),flight.getArrivalAirport().getAirportCity()), flight.getDepartureDateTime(), flight.getReturnDateTime(), flight.getPrice()));
+        for (Flight flight : listOfFlightEntities){
+            listOfFlightDTOs.add(new FlightDTO(flight.getFlightId(), new AirportDTO(flight.getDepartureAirport().getAirportId(), flight.getDepartureAirport().getAirportCity()), new AirportDTO(flight.getArrivalAirport().getAirportId(), flight.getArrivalAirport().getAirportCity()), flight.getDepartureDateTime(), flight.getReturnDateTime(), flight.getPrice()));
         }
         return new GetAllFlightsResponseDTO( listOfFlightDTOs);
     }
 
     @Transactional
-    public GetFlightResponseDTO getFlight( Integer flightID) {
-        Flight flight = flightRepository.findById(flightID).orElseThrow(() -> new NoSuchFlightException("There is no flight with this Id"));
+    public GetFlightResponseDTO getFlight(Integer flightID) {
+        Flight flight = flightRepository.findById(flightID).orElseThrow(() -> new NoSuchFlightException(Constants.NO_SUCH_FLIGHT));
         return new GetFlightResponseDTO( flight.getFlightId(), flight.getDepartureAirport(), flight.getArrivalAirport(), flight.getDepartureDateTime(), flight.getReturnDateTime(), flight.getPrice());
     }
 
     @Transactional
-    public UpdateFlightResponseDTO updateFlight( Integer flightId,UpdateFlightRequestDTO updateFlightRequestDTO) {
-        Flight flight = flightRepository.findById(flightId).orElseThrow(() -> new NoSuchFlightException("There is no flight with this Id"));
+    public UpdateFlightResponseDTO updateFlight(Integer flightId, UpdateFlightRequestDTO updateFlightRequestDTO) {
+        Flight flight = flightRepository.findById(flightId).orElseThrow(() -> new NoSuchFlightException(Constants.NO_SUCH_FLIGHT));
         Flight updatedFlight =createUpdatedFlight(flight,updateFlightRequestDTO);
         flightRepository.save(updatedFlight);
         return new UpdateFlightResponseDTO(updatedFlight.getDepartureAirport(), updatedFlight.getArrivalAirport(), updatedFlight.getDepartureDateTime(), updatedFlight.getReturnDateTime(), updatedFlight.getPrice());
@@ -94,26 +101,26 @@ public class FlightService {
         }
         if(updateFlightRequestDTO.getDepartureAirportId()!=null && updateFlightRequestDTO.getArrivalAirportId()!=null){
             Airport arrivalAirport = airportRepository.findById(updateFlightRequestDTO.getArrivalAirportId())
-                    .orElseThrow(() -> new NoSuchAirportException("No airport with this id"));
+                    .orElseThrow(() -> new NoSuchAirportException(Constants.NO_SUCH_AIRPORT));
             Airport departureAirport = airportRepository.findById(updateFlightRequestDTO.getArrivalAirportId())
-                    .orElseThrow(() -> new NoSuchAirportException("No airport with this id"));
+                    .orElseThrow(() -> new NoSuchAirportException(Constants.NO_SUCH_AIRPORT));
             flight.setArrivalAirport(arrivalAirport);
             flight.setDepartureAirport(departureAirport);
         }
         if(updateFlightRequestDTO.getDepartureAirportId()!=null){
             if(flight.getArrivalAirport().getAirportId()==updateFlightRequestDTO.getDepartureAirportId()){
-                throw new AirportMismatchException("Arrival and Departure airports should be different");
+                throw new AirportMismatchException(Constants.AIRPORT_MISMATCH);
             }
             Airport departureAirport = airportRepository.findById(updateFlightRequestDTO.getDepartureAirportId())
-                    .orElseThrow(() -> new NoSuchAirportException("No airport with this id"));
+                    .orElseThrow(() -> new NoSuchAirportException(Constants.NO_SUCH_AIRPORT));
             flight.setDepartureAirport(departureAirport);
         }
         if(updateFlightRequestDTO.getArrivalAirportId()!=null){
             if(flight.getDepartureAirport().getAirportId()==updateFlightRequestDTO.getArrivalAirportId()){
-                throw new AirportMismatchException("Arrival and Departure airports should be different");
+                throw new AirportMismatchException(Constants.NO_SUCH_AIRPORT);
             }
             Airport arrivalAirport = airportRepository.findById(updateFlightRequestDTO.getArrivalAirportId())
-                    .orElseThrow(() -> new NoSuchAirportException("No airport with this id"));
+                    .orElseThrow(() -> new NoSuchAirportException(Constants.NO_SUCH_AIRPORT));
             flight.setDepartureAirport(arrivalAirport);
         }
         if(updateFlightRequestDTO.getDepartureDateTime()!=null && updateFlightRequestDTO.getReturnDateTime()!=null){
@@ -122,13 +129,13 @@ public class FlightService {
         }
         if(updateFlightRequestDTO.getReturnDateTime()!=null){
             if(flight.getDepartureDateTime().isAfter(updateFlightRequestDTO.getReturnDateTime())){
-                throw new DateMismatchException("return date cannot be before departure time");
+                throw new DateMismatchException(Constants.DATE_MISMATCH_DEPARTURE_AFTER_RETURN);
             }
             flight.setReturnDateTime(updateFlightRequestDTO.getReturnDateTime());
         }
-        if(updateFlightRequestDTO.getDepartureDateTime()!=null &&flight.getReturnDateTime()!=null ){
+        if(updateFlightRequestDTO.getDepartureDateTime()!=null && flight.getReturnDateTime()!=null ){
             if(updateFlightRequestDTO.getDepartureDateTime().isAfter(flight.getReturnDateTime())){
-                throw new DateMismatchException("return date cannot be before departure time");
+                throw new DateMismatchException(Constants.DATE_MISMATCH_DEPARTURE_AFTER_RETURN);
             }
             flight.setDepartureDateTime(updateFlightRequestDTO.getDepartureDateTime());
         }

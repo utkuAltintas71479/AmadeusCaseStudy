@@ -1,7 +1,5 @@
 package com.example.Amadeus.dto;
 
-import com.example.Amadeus.entity.Airport;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 

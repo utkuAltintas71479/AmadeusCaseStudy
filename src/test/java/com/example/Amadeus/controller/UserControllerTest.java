@@ -1,35 +1,21 @@
 package com.example.Amadeus.controller;
-import com.example.Amadeus.dto.LoginUserRequestDTO;
-import com.example.Amadeus.dto.LoginUserResponseDTO;
 import com.example.Amadeus.exception.AuthorizationException;
 import com.example.Amadeus.exception.UserNameAlreadyInUseException;
-import org.apache.catalina.User;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
-import com.example.Amadeus.dto.CreateNewUserRequestDTO;
-import com.example.Amadeus.dto.CreateNewUserResponseDTO;
+import com.example.Amadeus.dto.request.CreateNewUserRequestDTO;
+import com.example.Amadeus.dto.response.CreateNewUserResponseDTO;
 import com.example.Amadeus.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 
-import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import org.springframework.http.MediaType;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

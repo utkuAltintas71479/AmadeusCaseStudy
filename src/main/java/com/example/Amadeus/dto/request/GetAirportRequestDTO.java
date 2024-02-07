@@ -1,11 +1,12 @@
-package com.example.Amadeus.dto;
+package com.example.Amadeus.dto.request;
 
+import com.example.Amadeus.util.Constants;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
 public class GetAirportRequestDTO {
-    @NotNull(message = "Id should be given")
-    @Min(value = 1, message = "Given id should be numerical value above 0")
+    @NotNull(message = Constants.ID_REQUIRED)
+    @Min(value = Constants.ID_LOWER_LIMIT, message = Constants.ID_LOWER_LIMIT_FAILED)
     private Integer airportId;
 
     public GetAirportRequestDTO(Integer airportId) {
