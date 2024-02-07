@@ -1,16 +1,25 @@
-Case Study: Flight Search API  (Backend Developer)
+# Flight Search API Documentation
 
 
-Merhaba,
+## Using Swagger UI
 
-İnceleyen kişiye yardımcı olması için birkaç not düşmek istedim.
+- The API documentation has been prepared using Swagger to make it easy to interact with and understand the API's capabilities.
+- **No Authorization Required:** When interacting with the API via the Swagger UI, there is no need for authorization.
 
-Swagger kullanarak bir API dokümantasyonu hazırladım.
-Swagger UI üzerinden API ile etkileşime geçerken herhangi bir Authorization bulunmuyor
-Ancak Postman Üzerinden API ile etkileşime geçmek için Authorization sekmesinde Basic Auth seçip Kullanıcı adı ve şifre girmeniz gerekir.
-Yeni bir kullanıcıyı /users/create kullanarak yaratabilirsiniz.
-Uçuş ararken girdiğiniz tarihin gününde bulununan uçuşlar dikkate alınır.
+## Using Postman
 
-Unit test yazmak istiyordum. Ancak Proje beklediğimden daha çok vaktimi aldı. O kısımda yapmak istediklerimi tamamlayamadım.
+- **Authorization Required:** To interact with the API via Postman, Basic Auth is required.
+    - Go to the Authorization tab.
+    - Select Basic Auth from the dropdown.
+    - Enter your username and password.
+- **Creating a New User:** You can create a new user by sending a request to `/users/create`.
 
-Vaktiniz için teşekkürler
+
+
+## Note on Unit Tests
+
+- The intention was to write comprehensive unit tests to ensure the reliability and robustness of the API. However, project took more time than expected, this part of the project could not be completed as desired.
+
+## Thank You
+
+Thank you for taking the time to review this documentation and the Flight Search API. Your feedback and questions are highly welcome.
