@@ -1,4 +1,4 @@
-package com.example.Amadeus.dto;
+package com.example.Amadeus.dto.request;
 
 import jakarta.annotation.Nullable;
 

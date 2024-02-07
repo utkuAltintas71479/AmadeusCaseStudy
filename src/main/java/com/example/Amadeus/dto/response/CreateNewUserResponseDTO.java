@@ -1,4 +1,6 @@
-package com.example.Amadeus.dto;
+package com.example.Amadeus.dto.response;
+
+import com.example.Amadeus.util.Constants;
 
 public class CreateNewUserResponseDTO {
     private String message;
@@ -13,7 +15,7 @@ public class CreateNewUserResponseDTO {
     public CreateNewUserResponseDTO(Integer userId, String userName) {
         this.userId = userId;
         this.userName = userName;
-        this.message = "User created successfuly";
+        this.message = Constants.USER_CREATION_SUCCESS;
     }
 
     public String getMessage() {

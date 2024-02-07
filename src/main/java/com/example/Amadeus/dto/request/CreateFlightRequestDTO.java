@@ -1,23 +1,28 @@
-package com.example.Amadeus.dto;
+package com.example.Amadeus.dto.request;
 
+import com.example.Amadeus.util.Constants;
 import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public class UpdateFlightRequestDTO {
+public class CreateFlightRequestDTO {
+
+
+    @NotNull(message = Constants.DEPARTURE_AIRPORT_REQUIRED)
     private Integer departureAirportId;
 
-
+    @NotNull(message = Constants.ARRIVAL_AIRPORT_REQUIRED)
     private Integer arrivalAirportId;
 
-    @Future(message = "Return date must be in the future")
+    @Future(message = Constants.DEPARTURE_DATE_REQUIRED)
     private LocalDateTime departureDateTime;
 
-    @Future(message = "Return date must be in the future")
+    @Future(message = Constants.RETURN_DATE_REQUIRED)
     private LocalDateTime returnDateTime;
 
-
+    @NotNull(message = Constants.PRICE_REQUIRED)
     private BigDecimal price;
 
     public Integer getDepartureAirportId() {

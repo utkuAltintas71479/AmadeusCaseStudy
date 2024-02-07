@@ -1,11 +1,8 @@
 package com.example.Amadeus.service;
 
-import com.example.Amadeus.dto.CreateNewUserRequestDTO;
-import com.example.Amadeus.dto.CreateNewUserResponseDTO;
-import com.example.Amadeus.dto.LoginUserRequestDTO;
-import com.example.Amadeus.dto.LoginUserResponseDTO;
+import com.example.Amadeus.dto.request.CreateNewUserRequestDTO;
+import com.example.Amadeus.dto.response.CreateNewUserResponseDTO;
 import com.example.Amadeus.entity.User;
-import com.example.Amadeus.exception.AuthorizationException;
 import com.example.Amadeus.exception.UserNameAlreadyInUseException;
 import com.example.Amadeus.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -21,6 +18,7 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+
     @Transactional
     public CreateNewUserResponseDTO createUser(CreateNewUserRequestDTO createNewUserRequestDTO) {
         if (isUsernameAlreadyInUse(createNewUserRequestDTO.getUserName())) {
@@ -33,14 +31,7 @@ public class UserService {
         return new CreateNewUserResponseDTO(user.getUserId(), user.getUserName());
     }
 
-    public LoginUserResponseDTO loginUser(LoginUserRequestDTO loginUserRequestDTO) {
-        User user = userRepository.findByUserName(loginUserRequestDTO.getUserName())
-                .orElseThrow(() -> new AuthorizationException("Invalid username"));
-        if (!passwordEncoder.matches(loginUserRequestDTO.getPassword(), user.getPassword())) {
-            throw new AuthorizationException("Invalid password");
-        }
-        return new LoginUserResponseDTO(user.getUserName());
-    }
+
 
 
     public boolean isUsernameAlreadyInUse(String userName) {

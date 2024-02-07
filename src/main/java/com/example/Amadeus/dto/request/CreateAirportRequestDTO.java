@@ -1,9 +1,10 @@
-package com.example.Amadeus.dto;
+package com.example.Amadeus.dto.request;
 
+import com.example.Amadeus.util.Constants;
 import jakarta.validation.constraints.NotBlank;
 
 public class CreateAirportRequestDTO {
-    @NotBlank(message = "City is required")
+    @NotBlank(message = Constants.CITY_REQUIRED)
     private String airportCity;
 
     public String getAirportCity() {

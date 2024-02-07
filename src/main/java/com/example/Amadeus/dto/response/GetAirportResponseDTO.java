@@ -1,14 +1,16 @@
-package com.example.Amadeus.dto;
+package com.example.Amadeus.dto.response;
 
-public class UpdateAirportResponseDTO {
-    private String message;
+import com.example.Amadeus.util.Constants;
+
+public class GetAirportResponseDTO {
+    private final String message;
     private Integer airportId;
-
     private String airportCity;
 
-    public UpdateAirportResponseDTO(Integer airportId, String airportCity) {
+
+    public GetAirportResponseDTO(Integer airportId, String airportCity) {
         this.airportId = airportId;
-        this.message = "AirportUpdated successfully";
+        this.message = Constants.AIRPORT_RETRIEVAL_SUCCESS;
         this.airportCity = airportCity;
     }
 
@@ -18,14 +20,6 @@ public class UpdateAirportResponseDTO {
 
     public void setAirportId(Integer airportId) {
         this.airportId = airportId;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 
     public String getAirportCity() {

@@ -1,5 +1,6 @@
 package com.example.Amadeus.entity;
 
+import com.example.Amadeus.util.Constants;
 import jakarta.persistence.*;
 
 @Entity
@@ -8,10 +9,10 @@ public class User {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer userId;
 
-    @Column(nullable = false, length = 255)
+    @Column(nullable = false, length = Constants.USERNAME_MAX_LENGTH)
     private String userName;
 
-    @Column(nullable = false, length = 255)
+    @Column(nullable = false, length = Constants.PASSWORD_MAX_LENGTH)
     private String password;
 
     public Integer getUserId() {

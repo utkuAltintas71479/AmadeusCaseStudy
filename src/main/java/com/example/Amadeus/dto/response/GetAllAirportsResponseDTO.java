@@ -1,4 +1,7 @@
-package com.example.Amadeus.dto;
+package com.example.Amadeus.dto.response;
+
+import com.example.Amadeus.dto.AirportDTO;
+import com.example.Amadeus.util.Constants;
 
 import java.util.List;
 
@@ -7,7 +10,7 @@ public class GetAllAirportsResponseDTO {
     private List<AirportDTO> airports;
 
     public GetAllAirportsResponseDTO(List<AirportDTO> airports) {
-        this.message = "Airports retrieved successfully";
+        this.message = Constants.AIRPORT_RETRIEVAL_SUCCESS;
         this.airports = airports;
     }
 

@@ -1,6 +1,7 @@
-package com.example.Amadeus.dto;
+package com.example.Amadeus.dto.response;
 
 import com.example.Amadeus.entity.Airport;
+import com.example.Amadeus.util.Constants;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -23,7 +24,7 @@ public class UpdateFlightResponseDTO {
 
 
     public UpdateFlightResponseDTO(Airport departureAirport, Airport arrivalAirport, LocalDateTime departureDateTime, LocalDateTime returnDateTime, BigDecimal price) {
-        this.message = "Flight Updated successfuly";
+        this.message = Constants.FLIGHT_UPDATE_SUCCESS;
         this.departureAirport = departureAirport;
         this.arrivalAirport = arrivalAirport;
         this.departureDateTime = departureDateTime;

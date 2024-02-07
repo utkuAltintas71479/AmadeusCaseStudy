@@ -1,5 +1,6 @@
 package com.example.Amadeus.entity;
 
+import com.example.Amadeus.util.Constants;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -25,7 +26,7 @@ public class Flight {
     @Column
     private LocalDateTime returnDateTime;
 
-    @Column(nullable = false, precision = 10, scale = 2)
+    @Column(nullable = false, precision = Constants.PRICE_PRECISION, scale = Constants.PRICE_SCALE)
     private BigDecimal price;
 
     public Integer getFlightId() {
