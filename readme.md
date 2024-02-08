@@ -1,5 +1,9 @@
 # Flight Search API Documentation
 
+## Mock API Call
+- For the generation of mock flights, there should be airports present in the database. You should first create some airports.
+- Mock API is called every minute for testing purposes
+
 
 ## Using Swagger UI
 
